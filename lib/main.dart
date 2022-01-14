@@ -49,6 +49,7 @@ class _MainState extends State<Main> {
 
   Logs? json;
   List<User>? users;
+  User? user;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Logs>(
@@ -87,7 +88,13 @@ class _MainState extends State<Main> {
         future: restUser.getUsersWithId(log),
         builder: (context, snapShot) {
           if(snapShot.hasData){
-            
+            user = snapShot.data;
+            return MainScreen(data:user); 
+          }else{
+            return const Scaffold(
+                body: Center(
+              child: Text('No users registered.'),
+            ));
           }
         }
       )

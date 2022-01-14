@@ -2,6 +2,7 @@ import "dart:convert";
 import "../models/todo.dart";
 import "../dependencies.dart";
 import "./rest_service.dart";
+import "../models/user.dart";
 
 
 class TodoDataService{
@@ -17,9 +18,9 @@ class TodoDataService{
 
   Future<dynamic> getUserTodoList(int userId) async {
       final todoList = await getTodoList();
-      dynamic filteredTodo = todoList.where((element) => element.userId == userId);
+      User filteredTodo = todoList.where((element) => element.userId == userId);
       
-      if (filteredTodo) return filteredTodo;
+      if (filteredTodo is User) return filteredTodo;
       else return false;
   }
 
