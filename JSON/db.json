@@ -1,0 +1,24 @@
+{    
+    
+    "logs":{
+        "lastLogin": 0,
+        "log": false 
+    },
+    "todos":[
+        {
+            "id":0,
+            "userId": 3424232,
+            "title": "",
+            "body": "", 
+            "completed": false
+        }
+    ],
+    "users":[
+        {
+         "id": 0,
+         "userId": 3424232,
+         "password": "helloworld",
+         "name": "alanace"
+        }
+    ]
+}
