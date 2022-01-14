@@ -24,7 +24,10 @@ class _BodyState extends State<Body>{
         _todo = widget.list[index];
 
         return ListTile(
-          
+          title: Text(_todo!.title), 
+          subtitle: Text(_todo!.body), 
+          onTap: (){},
+          onLongPress: (){},
         );
       },
       separatorBuilder: (context, index) => const Divider(
