@@ -8,6 +8,7 @@ import "../../services/todo_service.dart";
 import "../../models/user.dart";
 import "../../screens/login/login_screen.dart";
 
+
 void main() {
   dep.init();
 
@@ -89,7 +90,7 @@ class _MainState extends State<Main> {
         builder: (context, snapShot) {
           if(snapShot.hasData){
             user = snapShot.data;
-            return MainScreen(data:user); 
+            return MainScreen(user:user); 
           }else{
             return const Scaffold(
                 body: Center(
@@ -97,6 +98,6 @@ class _MainState extends State<Main> {
             ));
           }
         }
-      )
+      );
   }
 }

@@ -11,17 +11,17 @@ class TodoDataService{
   Future<List<Todo>> getTodoList() async {
     final response = await rest.get("todo");
 
-    List<Todo> list;
+    List<Todo> list = response.map((element) => Todo.fromJson(element)).toList();
 
-    return list = response.map((element) => Todo.fromJson(element)).toList();
+    return list;
   }
 
-  Future<dynamic> getUserTodoList(int userId) async {
+  Future<List<Todo>> getUserTodoList(int userId) async {
       final todoList = await getTodoList();
-      User filteredTodo = todoList.where((element) => element.userId == userId);
+      List<Todo> filteredTodo = todoList.where((element) => element.userId == userId).toList();
       
-      if (filteredTodo is User) return filteredTodo;
-      else return false;
+       return filteredTodo;
+      
   }
 
   Future<Todo> updateTodoList(int id, Todo todo) async {

@@ -1,18 +1,16 @@
 import "package:flutter/material.dart";
 import "./float.dart";
-// import "./body.dart";
+import "./body.dart";
 import "./bar.dart";
-import "../../models/log.dart";
 import "../../dependencies.dart";
-import "../../services/task_service.dart";
 import "../../services/todo_service.dart";
 import "../../models/user.dart";
-import "../../screens/login/login_screen.dart";
+import "../../models/todo.dart";
 
 
 class MainScreen extends StatefulWidget{
-    User? data;
-    MainScreen({required this.data});
+    User? user;
+    MainScreen({ required this.user});
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -21,18 +19,31 @@ class MainScreen extends StatefulWidget{
 
 class _MainScreenState extends State<MainScreen>{
     get restTodo => service<TodoDataService>();
-    get todoList => restTodo.getUserTodoList(widget.data!.userId);
+    get todoList => restTodo.getUserTodoList(widget.user!.userId);
+    List<Todo>? list;
+    // void navigateEdit(int index) async {
+    //     dynamic response = Navigator.of(context).push(
+    //       MaterialPageRoute(
+    //         builder: ,
+    //       ),
+    //     )
+    // }
 
-    void navigateEdit(int index) async {
-        dynamic response = Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: ,
-          ),
-        )
-    }
+
     @override
     Widget build(BuildContext context) {
-      return FutureBuilder<>
+      return FutureBuilder<List<Todo>>(
+        future: todoList,
+        builder: (context, snapShot) {
+            list = snapShot.data;
+            return Scaffold(
+              // appBar: Bar(user:widget.user) as PreferredSizeWidget,
+              // appBar: AppBar()
+              body: Body(list: list!),
+              // floatingActionButton: Float(),
+            );
+        }
+      );
     }
 }
 
