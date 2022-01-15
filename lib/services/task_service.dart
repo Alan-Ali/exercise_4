@@ -24,9 +24,9 @@ class TaskDataService{
   }
 
    Future<User> getUserWithId(int userId) async {
-        List<User> users = await getUsers();
-
-    User user = users.firstWhere(
+        final users = await getUsers();
+        
+    User? user = users.firstWhere(
         (element) => element.userId == userId);
 
       return user;

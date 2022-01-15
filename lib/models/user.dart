@@ -6,7 +6,7 @@ class User{
   User.fromJson(Map<String, dynamic> json) 
   : this(
     id: json['id'],
-    userId: json["id"],
+    userId: json["userId"],
     name: json["name"],
     password: json["password"],
   );

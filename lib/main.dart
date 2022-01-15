@@ -56,11 +56,12 @@ class _MainState extends State<Main> {
     return FutureBuilder<Logs>(
       future: logs,
       builder: (context, snapShot) {
-        json = snapShot.data;
+        json = snapShot.data!;
 
-        if (!json!.log) {
+        if ( json!.log == false) {
           return _buildLoginScreen();
         } else {
+          
           return _buildMainScreen(json!.lastLogin);
         }
       },
@@ -77,19 +78,22 @@ class _MainState extends State<Main> {
           } else {
             return const Scaffold(
                 body: Center(
-              child: Text('No users registered.'),
+              child: Text('No re registered.'),
             ));
           }
         });
   }
 
 
-  FutureBuilder<User> _buildMainScreen(int? log){
+  FutureBuilder<User> _buildMainScreen(int logId){
+      final id = service<TaskDataService>();
+      final value = id.getUserWithId(logId);
+
       return FutureBuilder<User>(
-        future: restUser.getUsersWithId(log),
+        future: value,
         builder: (context, snapShot) {
           if(snapShot.hasData){
-            user = snapShot.data;
+            user = snapShot.data!;
             return MainScreen(user:user); 
           }else{
             return const Scaffold(

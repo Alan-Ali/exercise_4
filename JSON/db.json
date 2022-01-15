@@ -2,23 +2,29 @@
     
     "logs":{
         "lastLogin": 0,
-        "log": false 
+        "log":false
     },
     "todos":[
         {
-            "id":0,
+            "id": 1,
             "userId": 3424232,
-            "title": "",
-            "body": "", 
+            "title": "alksjfladfj",
+            "body": "asljfl asfj lkasjf lasfj lasfj asldkfj aldkjs fladkjsf alsdf", 
             "completed": false
         }
     ],
     "users":[
         {
-         "id": 0,
+         "id": 1,
          "userId": 3424232,
          "password": "helloworld",
          "name": "alanace"
+        },
+        {
+            "id": 2,
+            "userId": 3422234,
+            "password": "helloworld",
+            "name": "alanace"
         }
     ]
 }

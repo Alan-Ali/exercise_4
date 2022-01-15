@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen>{
           child: Text("Login Screen"),
         )
       ),
-      body: Text("hello ")
+      body: Body(list: widget.users),
     );
   }
 

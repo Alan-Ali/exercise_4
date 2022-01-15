@@ -9,7 +9,7 @@ class TodoDataService{
   final rest = service<RestService>();
 
   Future<List<Todo>> getTodoList() async {
-    final response = await rest.get("todo");
+    final response = await rest.get("todos");
 
     List<Todo> list = response.map((element) => Todo.fromJson(element)).toList();
 
