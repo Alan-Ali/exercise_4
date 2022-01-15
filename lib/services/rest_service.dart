@@ -13,7 +13,7 @@ var wifiName = info.getWifiName(); // FooNetwork
 
 class RestService {
 
-  final String url = "http://192.168.1.3:3000";
+  final String url = "http://192.168.1.5:3000";
 
   Future<List<dynamic>> get(String endpoint) async {
       final response = await http.get("$url/$endpoint",
