@@ -4,6 +4,7 @@ import "../../models/user.dart";
 import "../../dependencies.dart";
 import "../../services/todo_service.dart";
 import "../../screens/main/main_screen.dart";
+import "../../services/task_service.dart";
 
 class Body extends StatefulWidget {
   List<User> list;
@@ -14,22 +15,30 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // final restUser = ;
+  
   get todoList => service<TodoDataService>();
-  // List<User> users;
+  get userTask => service<TaskDataService>();
   final nameController = TextEditingController();
   final passController = TextEditingController();
-  bool visibleCorrect = false, visibleIncorrect  = false, color = false;
+  bool visibleCorrect = false, visibleIncorrect  = false;
+  // bool colored = false;
   User? user;
 
 
-  void _navigateMainScreen() async {
-      final response = Navigator.of(context).push(
+  void _navigateMainScreen(User? user, List<User> users) async {
+      final response = await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => MainScreen(user:user)),
+          builder: (context) => MainScreen(user:user, users: users)),
       );
   }
 
+  void updateTask() async {
+    await userTask.updateUserLogin(user!.userId);
+      setState(() {
+      // visibleIncorrect = false;
+      // visibleCorrect = true;
+    });_navigateMainScreen(user!, widget.list);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +66,8 @@ class _BodyState extends State<Body> {
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
-                }else if(!color){
-                  return " ";
                 }
+
                 return null;
               },
             ),
@@ -82,68 +90,80 @@ class _BodyState extends State<Body> {
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
-                    }else if(!color){
-                      return " ";
                     }
                     return null;
                   },
                 ),
               ),
             ]),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Visibility(
-                  child: const Text("Incorrect password or username", 
+            Visibility(
+              visible: visibleIncorrect,
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text('Incorrect password or Email', 
                   style: TextStyle(
                     color: Colors.red,
                   )),
-                  visible: visibleIncorrect, 
-                ),
-              ),
+                )
+              )
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Visibility(
-                  child: const Text("Correct",
-                  style: TextStyle(
-                        color: Colors.green,
-                      )),
-                  visible: visibleCorrect,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-             
-                  if (_formKey.currentState!.validate()) {
-                      for(int index = 0; index < widget.list.length; index++) {
-                          if(nameController.text == widget.list[index].name 
-                          && passController.text == widget.list[index].password){
-                            user = widget.list[index];
-                            color = true;
-                          }
-                      }
-                    
-                    if(!color){
-                      setState((){ 
-                        visibleIncorrect = true;
-                        visibleCorrect = false; 
-                      });
-                    }else{
-                      setState((){
-                         visibleCorrect = true;
-                         visibleIncorrect = false;
-                      });
-                    }
+                Visibility(
+                visible: visibleCorrect,
+                child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text('Correct',
+                          style: TextStyle(
+                            color: Colors.red,
+                          )),
+                    ))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
                       
-                  }
-                },
-                child: const Text('Submit'),
-              ),
+                      if (_formKey.currentState!.validate()) {
+                         bool value = false;
+                          for(int index = 0; index < widget.list.length; index++) {
+                              if(nameController.text == widget.list[index].name 
+                              && passController.text == widget.list[index].password){
+                                user = widget.list[index];
+                                value = true;
+                                break;
+                              }
+                          }
+                        
+                        if(!value){
+                          setState((){ 
+                            visibleIncorrect = true;
+                            visibleCorrect = false; 
+                          });
+                        }else{
+                         updateTask();
+                        }
+                      }
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                          nameController.clear();
+                          passController.clear();
+                      }
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

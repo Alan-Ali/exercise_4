@@ -25,16 +25,6 @@ class RestService {
   
   }
 
-  Future<dynamic> patch(String endpoint, {dynamic data}) async {
-    final response = await http.patch("$url/$endpoint", 
-    headers: {"Content-Type": "application/json"}, body: jsonEncode(data) );
-
-    if(response.statusCode == 200){
-        return jsonDecode(response.body);
-    }throw response; 
-
-  }
-
   Future<dynamic> post(String endpoint, {Todo? todo}) async {
     final response = await http.post("$url/$endpoint",
     headers: {"Content-Type": "application/json"}, body: jsonEncode(todo));
@@ -44,6 +34,20 @@ class RestService {
     }throw response;
 
   }
+
+  Future<dynamic> patch(String endpoint, {dynamic data}) async {
+    final response = await http.patch("$url/$endpoint", 
+    headers: {"Content-Type": "application/json"}, body: jsonEncode({
+      'lastLogin': data.lastLogin, 
+      'log':data.log
+    }) );
+
+    if(response.statusCode == 200){
+        return jsonDecode(response.body);
+    }throw response; 
+
+  }
+
 
 
   Future delete(String endpoint) async {
@@ -62,18 +66,19 @@ class RestService {
   }
 
 
-  Future updateLog() async {
+  Future updateLog(int id) async {
     final response = await logs();
     Logs json = Logs.fromJson(json:response);
     json.log = !json.log;
+    json.lastLogin = id;
     await patch('logs', data: json);
   }
 
-  Future<int> lastLog() async {
-    final response = await http.get('$url/');
+  // Future<int> lastLog() async {
+  //   final response = await http.get('$url/logs');
 
-    return jsonDecode(response.body);
-  }
+  //   return jsonDecode(response.body);
+  // }
 
 
 }

@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
     
@@ -94,7 +95,17 @@ class _MainState extends State<Main> {
         builder: (context, snapShot) {
           if(snapShot.hasData){
             user = snapShot.data!;
-            return MainScreen(user:user); 
+            return FutureBuilder<List<User>>(
+              future: userList,
+              builder: (context, snapShot) {
+                users = snapShot.data!;
+                if(snapShot.hasData) {
+                  return MainScreen(user: user!, users: users);
+                  }else{
+                    return const CircularProgressIndicator();
+                  }
+              }
+            ); 
           }else{
             return const Scaffold(
                 body: Center(

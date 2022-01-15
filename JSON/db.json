@@ -1,30 +1,29 @@
-{    
-    
-    "logs":{
-        "lastLogin": 0,
-        "log":false
+{
+  "logs": {
+    "lastLogin": 3424232,
+    "log": true
+  },
+  "todos": [
+    {
+      "id": 1,
+      "userId": 3424232,
+      "title": "alksjfladfj",
+      "body": "asljfl asfj lkasjf lasfj lasfj asldkfj aldkjs fladkjsf alsdf",
+      "completed": false
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "userId": 3424232,
+      "password": "helloworld",
+      "name": "alanace"
     },
-    "todos":[
-        {
-            "id": 1,
-            "userId": 3424232,
-            "title": "alksjfladfj",
-            "body": "asljfl asfj lkasjf lasfj lasfj asldkfj aldkjs fladkjsf alsdf", 
-            "completed": false
-        }
-    ],
-    "users":[
-        {
-         "id": 1,
-         "userId": 3424232,
-         "password": "helloworld",
-         "name": "alanace"
-        },
-        {
-            "id": 2,
-            "userId": 3422234,
-            "password": "helloworld",
-            "name": "alanace"
-        }
-    ]
+    {
+      "id": 2,
+      "userId": 3422234,
+      "password": "hithere",
+      "name": "alanace"
+    }
+  ]
 }

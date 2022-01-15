@@ -38,8 +38,8 @@ class TaskDataService{
         return json;
   }
 
-  Future updateUserLogin() async {
-    await rest.updateLog(); 
+  Future updateUserLogin(int id) async {
+    await rest.updateLog(id); 
   }
 
   // Future<int> lastUserLog() async { 
