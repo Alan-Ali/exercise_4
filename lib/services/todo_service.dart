@@ -11,30 +11,31 @@ class TodoDataService{
   Future<List<Todo>> getTodoList() async {
     final response = await rest.get("todos");
 
-    List<Todo> list = response.map((element) => Todo.fromJson(element)).toList();
+    List<Todo>? list = response.map((element) => Todo.fromJson(element)).toList();
 
     return list;
   }
 
-  Future<List<Todo>> getUserTodoList(int userId) async {
+  Future<List<Todo>> getUserTodoList(int? userId) async {
       final todoList = await getTodoList();
-      List<Todo> filteredTodo = todoList.where((element) => element.userId == userId).toList();
+      List<Todo>? filteredTodo = todoList.where((element) => element.userIdd == userId).toList();
       
        return filteredTodo;
       
   }
 
-  Future<Todo> updateTodoList(int id, Todo todo) async {
-    final response =  await rest.patch("todos/$id", data: todo);
+  Future<Todo> updateTodoList(int? id, Todo? todo) async {
+    final response =  await rest.patch("todos/$id", data: todo!);
 
     return Todo.fromJson(response);
   }
 
-  Future createTodo(Todo todo) async {
-        await rest.post("todos", todo: todo);
+  Future createTodo(Todo? todo) async {
+        await rest.post("todos/", todo: todo!);
   }
 
- 
-
+  Future deleteTodo(int id) async {
+    await rest.delete(id,"todos/$id");
+  }
 
 }

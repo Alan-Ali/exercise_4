@@ -7,6 +7,9 @@ import "../../services/task_service.dart";
 import "../../services/todo_service.dart";
 import "../../models/user.dart";
 import "../../screens/login/login_screen.dart";
+import "dart:async";
+
+// StreamController<int> streamController = StreamController<>();
 
 
 void main() {
@@ -32,9 +35,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
 
 
 class Main extends StatefulWidget {
@@ -74,9 +74,15 @@ class _MainState extends State<Main> {
         future: userList,
         builder: (context, snapShot) {
           if (snapShot.hasData) {
-            users = snapShot.data;
+            users = snapShot.data!;
             return LoginScreen(users: users!);
-          } else {
+          } else if(snapShot.error != null) {
+            return const Scaffold(
+                body: Center(
+              child: Text('No re registered.'),
+              )
+            );
+          }else{
             return const Scaffold(
                 body: Center(
               child: Text('No re registered.'),
@@ -86,9 +92,9 @@ class _MainState extends State<Main> {
   }
 
 
-  FutureBuilder<User> _buildMainScreen(int logId){
-      final id = service<TaskDataService>();
-      final value = id.getUserWithId(logId);
+  FutureBuilder<User> _buildMainScreen(int? logId){
+      final id = service<TaskDataService>()!;
+      final value = id.getUserWithId(logId!);
 
       return FutureBuilder<User>(
         future: value,
@@ -98,18 +104,22 @@ class _MainState extends State<Main> {
             return FutureBuilder<List<User>>(
               future: userList,
               builder: (context, snapShot) {
-                users = snapShot.data!;
-                if(snapShot.hasData) {
-                  return MainScreen(user: user!, users: users);
+                if(snapShot.hasData) { 
+                  users = snapShot.data!;
+                  return MainScreen(user: user!, users: users!);
                   }else{
-                    return const CircularProgressIndicator();
+                    return const Scaffold(
+                        body: Center(
+                      child: Text("No to do registered."),
+                    ));
+                    
                   }
               }
             ); 
           }else{
             return const Scaffold(
                 body: Center(
-              child: Text('No users registered.'),
+              child: Text("No users registered."),
             ));
           }
         }

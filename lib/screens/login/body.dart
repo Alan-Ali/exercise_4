@@ -7,7 +7,7 @@ import "../../screens/main/main_screen.dart";
 import "../../services/task_service.dart";
 
 class Body extends StatefulWidget {
-  List<User> list;
+  List<User>? list;
   Body({Key? key, required this.list}) : super(key: key);
   @override
   _BodyState createState() => _BodyState();
@@ -25,19 +25,21 @@ class _BodyState extends State<Body> {
   User? user;
 
 
-  void _navigateMainScreen(User? user, List<User> users) async {
-      final response = await Navigator.of(context).push(
+  void _navigateMainScreen(User? user, List<User>? users) async {
+      // final response = 
+      await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => MainScreen(user:user, users: users)),
+          builder: (context) => MainScreen(user:user!, users: users!)),
       );
   }
 
   void updateTask() async {
-    await userTask.updateUserLogin(user!.userId);
+    await userTask.updateUserLogin(user!.userIdd);
       setState(() {
       // visibleIncorrect = false;
       // visibleCorrect = true;
-    });_navigateMainScreen(user!, widget.list);
+    });
+    _navigateMainScreen(user!, widget.list!);
   }
 
   @override
@@ -129,10 +131,10 @@ class _BodyState extends State<Body> {
                       
                       if (_formKey.currentState!.validate()) {
                          bool value = false;
-                          for(int index = 0; index < widget.list.length; index++) {
-                              if(nameController.text == widget.list[index].name 
-                              && passController.text == widget.list[index].password){
-                                user = widget.list[index];
+                          for(int index = 0; index < widget.list!.length; index++) {
+                              if(nameController.text == widget.list![index].name 
+                              && passController.text == widget.list![index].password){
+                                user = widget.list![index];
                                 value = true;
                                 break;
                               }

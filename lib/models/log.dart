@@ -10,5 +10,10 @@ class Logs{
     log: json['log']
   );
 
+  Map<String, dynamic> toJson() => {
+        'lastLogin': lastLogin,
+        'log': log
+      };
+
 
 }

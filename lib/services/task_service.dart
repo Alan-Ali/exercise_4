@@ -1,4 +1,4 @@
-import "dart:convert";
+// import "dart:convert";
 import "../models/user.dart";
 import "rest_service.dart";
 import "../dependencies.dart";
@@ -26,8 +26,8 @@ class TaskDataService{
    Future<User> getUserWithId(int userId) async {
         final users = await getUsers();
         
-    User? user = users.firstWhere(
-        (element) => element.userId == userId);
+    User user = users.firstWhere(
+        (element) => element.userIdd == userId);
 
       return user;
    }

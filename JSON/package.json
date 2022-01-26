@@ -1,0 +1,11 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "database for exercise_4",
+  "main": "index.js",
+  "scripts": {
+    "test": "json-server --host 192.168.0.123 db.json"
+  },
+  "author": "",
+  "license": "ISC"
+}

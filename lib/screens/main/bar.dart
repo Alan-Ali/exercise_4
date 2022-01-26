@@ -6,12 +6,14 @@ import "../../dependencies.dart";
 import "../main/main_screen.dart";
 
 class Bar extends StatefulWidget  implements PreferredSizeWidget {
-  final user;
-  final users;
-  const Bar({Key? key, required this.user, required this.users}) : super(key: key);
+  User? user;
+  List<User>? users;
+  final MainScreenState _state;
+  
+  Bar({required this.user, required this.users, state}) : _state = state;
   
   @override
-  Size get preferredSize => const Size.fromHeight(75);
+  Size get preferredSize => const Size.fromHeight(50);
 
   @override
   _BarState createState() => _BarState();
@@ -19,13 +21,13 @@ class Bar extends StatefulWidget  implements PreferredSizeWidget {
 
 class _BarState extends State<Bar> {
   // final restUser = ;
-  get userTask => service<TaskDataService>();
-  get userList => userTask.getUsers();
+  get userTask => service<TaskDataService>()!;
+  get userList => userTask.getUsers()!;
   // final users;
-  void navigateLoginScreen(List<User> list) async {
+  void navigateLoginScreen(List<User>? list) async {
      await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => LoginScreen(users: list),
+          builder: (context) => LoginScreen(users: list!),
         )
     );
   }
@@ -36,7 +38,7 @@ class _BarState extends State<Bar> {
     ));
   }
    void updateTask() async {
-    await userTask.updateUserLogin(widget.user!.userId);
+    await userTask.updateUserLogin(widget.user!.userIdd);
     setState(() {
       // visibleIncorrect = false;
       // visibleCorrect = true;
@@ -55,32 +57,32 @@ class _BarState extends State<Bar> {
 		  image: DecorationImage(
 		    image: AssetImage('images/606666.png'),
 		    fit: BoxFit.fill
-		  ),
-		  ),
-),
-title: Column(
-  mainAxisAlignment: MainAxisAlignment.start,
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: <Text>[
-    const Text("My Todo List"),
-    Text("${widget.user.name}", 
-    style: const TextStyle(
-      fontSize: 15,
-      color: Colors.grey,
-    )),
-  ]
-),
-actions: <Widget>[
-  ElevatedButton(
-    child: Icon(Icons.logout),
-    onPressed: () async { 
-      updateTask();
-      navigateLoginScreen(widget.users);
-    },
-  ),
- 
-      ],
-    );
+             ),
+          ),
+      ),
+      title: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Text>[
+          const Text("My Todo List"),
+          Text("${widget.user!.name}", 
+          style: const TextStyle(
+            fontSize: 15,
+            color: Colors.grey,
+          )),
+        ]
+      ),
+      actions: <Widget>[
+        ElevatedButton(
+          child: const Icon(Icons.logout),
+          onPressed: () { 
+            updateTask();
+            navigateLoginScreen(widget.users!);
+          },
+        ),
+      
+            ],
+          );
   }
 }
 

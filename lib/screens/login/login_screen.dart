@@ -5,7 +5,7 @@ import "../../models/user.dart";
 
 class LoginScreen extends StatefulWidget{
 
-  List<User> users;
+  List<User>? users;
   LoginScreen({required this.users});
 
   @override
@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget{
 }
 
 class _LoginScreenState extends State<LoginScreen>{
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen>{
           child: Text("Login Screen"),
         )
       ),
-      body: Body(list: widget.users),
+      body: Body(list: widget.users!),
     );
   }
 

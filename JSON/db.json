@@ -1,29 +1,71 @@
 {
   "logs": {
-    "lastLogin": 3424232,
-    "log": true
+    "lastLogin": 453432,
+    "log": false
   },
-  "todos": [
-    {
-      "id": 1,
-      "userId": 3424232,
-      "title": "alksjfladfjsdfasdf assdfasdfasdf",
-      "body": "asljfl asfj lkasjf ladfdsfdsf",
-      "completed": true
-    }
-  ],
   "users": [
     {
       "id": 1,
-      "userId": 3424232,
-      "password": "helloworld",
-      "name": "alanace"
+      "userIdd": 453432,
+      "name": "alanace",
+      "password": "helloworld"
     },
     {
       "id": 2,
-      "userId": 3422234,
-      "password": "hithere",
-      "name": "alanace"
+      "userIdd": 34232,
+      "name": "alanace",
+      "password": "whyworld"
+    }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "userIdd": 453432,
+      "title": "hello world how are you",
+      "body": "here i thought i wrote something good",
+      "completed": false
+    },
+    {
+      "id": 3,
+      "userIdd": 453432,
+      "title": "New Todoasd fasdf asdf asdfasdf",
+      "body": "ready to setsdfasdfs",
+      "completed": false
+    },
+    {
+      "id": 4,
+      "userIdd": 453432,
+      "title": "New Todo",
+      "body": "ready to set",
+      "completed": false
+    },
+    {
+      "id": 9,
+      "userIdd": 453432,
+      "title": "New Todo",
+      "body": "ready to set",
+      "completed": false
+    },
+    {
+      "id": 6,
+      "userIdd": 453432,
+      "title": "New Todo",
+      "body": "ready to set",
+      "completed": false
+    },
+    {
+      "id": 7,
+      "userIdd": 453432,
+      "title": "New Todo",
+      "body": "ready to set",
+      "completed": false
+    },
+    {
+      "id": 8,
+      "userIdd": 453432,
+      "title": "New Todo",
+      "body": "ready to set",
+      "completed": false
     }
   ]
 }

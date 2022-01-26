@@ -1,4 +1,5 @@
 import "dart:convert";
+// ignore: import_of_legacy_library_into_null_safe
 import "package:http/http.dart" as http;
 import 'package:network_info_plus/network_info_plus.dart';
 import "../models/todo.dart";
@@ -13,7 +14,7 @@ var wifiName = info.getWifiName(); // FooNetwork
 
 class RestService {
 
-  final String url = "http://192.168.1.5:3000";
+  final String url = "http://192.168.0.123:3000";
 
   Future<List<dynamic>> get(String endpoint) async {
       final response = await http.get("$url/$endpoint",
@@ -25,7 +26,7 @@ class RestService {
   
   }
 
-  Future<dynamic> post(String endpoint, {Todo? todo}) async {
+  Future<dynamic> post(String endpoint, {required Todo todo}) async {
     final response = await http.post("$url/$endpoint",
     headers: {"Content-Type": "application/json"}, body: jsonEncode(todo));
 
@@ -37,10 +38,7 @@ class RestService {
 
   Future<dynamic> patch(String endpoint, {dynamic data}) async {
     final response = await http.patch("$url/$endpoint", 
-    headers: {"Content-Type": "application/json"}, body: jsonEncode({
-      'lastLogin': data.lastLogin, 
-      'log':data.log
-    }) );
+    headers: {"Content-Type": "application/json"}, body: jsonEncode(data.toJson()) );
 
     if(response.statusCode == 200){
         return jsonDecode(response.body);
@@ -50,9 +48,13 @@ class RestService {
 
 
 
-  Future delete(String endpoint) async {
-    final response = await http.delete("$url/$endpoint",
-     headers: {"Content-Type": "application/json"});
+  Future<dynamic> delete(int id,String endpoint) async {
+    // final response = await http.delete("$url/$endpoint");
+    final request = http.Request("DELETE", Uri.parse("$url/$endpoint"));
+    request.body = jsonEncode({'id': id});
+    request.headers.addAll({"Content-Type": "application/json"});
+
+    final response = await request.send();
     if(response.statusCode == 200){
       return print("delete Success");
     }throw response;
@@ -69,7 +71,7 @@ class RestService {
   Future updateLog(int id) async {
     final response = await logs();
     Logs json = Logs.fromJson(json:response);
-    json.log = !json.log;
+    json.log = json.log;
     json.lastLogin = id;
     await patch('logs', data: json);
   }
