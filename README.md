@@ -17,4 +17,4 @@ samples, guidance on mobile development, and a full API reference.
 
 
 
-#to run the file use command: flutter run --no-sound-null-safety
+# to run the file use command: flutter run --no-sound-null-safety
